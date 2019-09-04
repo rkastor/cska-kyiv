@@ -1,0 +1,27 @@
+.card 
+    display: block
+    padding: 40px
+    text-transform: uppercase
+    position: relative
+    color: inherit
+
+    *
+        color: currentColor
+
+    &__info
+        position: relative
+
+    &__category
+        padding: 5px 10px
+        background-color: $c-main
+        color: $c-white
+        width: max-content
+
+    &__title
+        font-weight: 700
+        margin: 1em 0 .5em
+        display: inline-block
+
+    &__btn
+        &:not(.btn--white)
+            color: $c-white

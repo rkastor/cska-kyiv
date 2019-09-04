@@ -1,0 +1,82 @@
+.header
+    padding: 20px 0 0
+    background-color: $c-biege
+    position: sticky
+    width: 100%
+    left: 0
+    top: 0
+    z-index: $z-header
+    text-transform: uppercase
+
+    .container-fluid
+        display: flex
+        justify-content: space-between
+        padding-left: 0
+        padding-right: 0
+
+    a, .site-name
+        font-family: $default-font
+        font-weight: 700
+
+    .site-name
+        font-size: 28px
+
+    .btn
+        font-weight: 500
+
+    &__logo
+        flex: 0 auto
+        padding: 0 40px
+        +min-md
+            .site-name
+                display: none
+
+    &__content
+        flex: 1 auto
+
+    &__info
+        padding: 20px 60px
+        display: flex
+        align-items: center
+        justify-content: space-between
+        flex-direction: row
+
+    &__nav
+        +min-md
+            background: linear-gradient(to right, transparent, $c-main 13%)
+
+        .nav__menu
+            position: relative
+            display: flex
+            justify-content: space-between
+            padding-right: 20px
+
+            .menu-item
+                flex: 1
+
+                a
+                    position: relative
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    min-height: 64px
+                    color: $c-white
+                    width: 100%
+                    font-weight: 500
+                    z-index: 1
+                    &::after
+                        content: ''
+                        display: block
+                        position: absolute
+                        background-color: $c-main
+                        transform: skewX(-30deg)
+                        left: 0
+                        top: 0
+                        width: 100%
+                        height: 100%
+                        z-index: -1
+                        transition: background-color .1s ease-in-out
+                &:hover
+                    a::after
+                        background-color: red
+
