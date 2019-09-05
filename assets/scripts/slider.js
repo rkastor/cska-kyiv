@@ -4,7 +4,7 @@ var newsThumbs = new Swiper('.news-slider__thumb', {
     speed: 800,
     slidesPerView: 4,
     spaceBetween: 20,
-    // loop: true,
+    loop: true,
     // pagination: {
     //     el: '.swiper-pagination',
     //     clickable: true,
@@ -22,11 +22,11 @@ var newsThumbs = new Swiper('.news-slider__thumb', {
             spaceBetween: 10,
         },
         680: {
-            slidesPerView: 1,
+            slidesPerView: 2,
             spaceBetween: 10,
         },
         576: {
-            slidesPerView: 1,
+            slidesPerView: 2,
             spaceBetween: 10,
         }
     }
@@ -36,19 +36,20 @@ var newsPreview = new Swiper('.news-slider__preview', {
     speed: 800,
     slidesPerView: 1,
     spaceBetween: 50,
-    loop: true,
+    // loop: true,
     autoplay: {
-        delay: 4000,
+        delay: 2000,
     },
     pagination: {
         el: '.swiper-pagination',
-        // type: 'fraction',
+        type: 'fraction',
+        clickable: true,
         // dynamicBullets: true,
     },
     thumbs: {
         swiper: newsThumbs
     },
-    // effect: 'fade',
+    effect: 'fade',
 });
 
 // $('.swiper-slide-duplicate').remove();
