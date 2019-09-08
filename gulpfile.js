@@ -20,7 +20,7 @@ var npmDir = './node_modules',
 /**************************Зависимости*************************************/
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
-    browserSync = require('browser-sync'),
+    browserSync = require('browser-sync').create(),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     cssnano = require('gulp-cssnano'),
@@ -128,7 +128,7 @@ gulp.task('sass', function () {
         // .pipe(sourcemaps.write('./')) 
         .pipe(rename('style.css'))
         .pipe(gulp.dest(dirStyles_dist))
-        .pipe(browserSync.reload({ stream: true }));
+        .pipe(browserSync.stream());
 });
 
 /**************************Сжатие CSS*******************************************/
@@ -187,25 +187,12 @@ gulp.task('scripts_main', function () {
 
 /**************************Browser Sync****************************************/
 gulp.task('browser-sync', function () {
-    browserSync({
+    browserSync.init({
         server: {
             baseDir: main_dist
         },
-        files: {
-            dirStyles_dist,
-            dirScripts_dist
-        },
-        notify: false
+        // notify: false
     });
-
-
-
-    gulp.watch([dirStyles_src + '/**/*.{sass,scss}'], ['sass']).on("change", browserSync.stream);
-    gulp.watch([dirImg_src + "/**/*"], ['img']).on("change", browserSync.reload);
-    gulp.watch([dirScripts_src + '/**/*.js'], ['scripts_main']).on("change", browserSync.stream);
-    gulp.watch([dirFonts_src], ['fonts']).on("change", browserSync.reload);
-    gulp.watch([dirSvg_src + '/**/*.svg'], ['svgo']).on("change", browserSync.reload);
-    gulp.watch([dirHtml_src + "/**/*.html"], ['nunjucks-render']).on("change", browserSync.reload);
 });
 
 
@@ -259,31 +246,6 @@ gulp.task('svgo', function () {
         .pipe(gulp.dest(dirSvg_dist));
 });
 
-// gulp.task('svgSprite', function () {
-
-//     function makeSvgSpriteOptions(dirPath) {
-//       return {
-//         mode: {
-//           symbol: {
-//             dest: '.',
-//             example: true,
-//             sprite: 'sprite.svg'
-//           },
-//         }
-//       };
-//     }
-
-//     return glob(dirSvg_src, function (err, dirs) {
-//         dirs.forEach(function (dir) {
-//         gulp.src(path.join(dir, '*.svg'))
-//             .pipe(svgSprite(makeSvgSpriteOptions(dir)))
-//             .pipe(size({showFiles: true, title: 'icon'}))
-//             .pipe(gulp.dest(dirSvg_dist))
-//         })
-//     }); 
-
-// });
-
 /**************************************Сжатие html******************************/
 gulp.task('minify_html', function () {
     return gulp.src(dirHtml_src + '/*.html')
@@ -296,9 +258,12 @@ gulp.task('nunjucks-render', function () {
     return gulp.src(dirHtml_src + '/*.html')
         .pipe(plumber())
         .pipe(nunjucksRender({
-            path: [dirHtml_src] // String or Array
+            path: [dirHtml_src + '/**/*'] // String or Array
         }))
-        .pipe(gulp.dest(dirHtml_dist));
+        .pipe(gulp.dest(dirHtml_dist))
+        .pipe(browserSync.reload({
+            stream: true
+        }));
 });
 
 /*******************************Обработчик ошибок******************************/
@@ -315,13 +280,16 @@ function log(error) {
 }
 
 
-
-
-
-
-
 /*************************************WATCH************************************/
-gulp.task('watch', ['browser-sync', 'nunjucks-render', 'sass', 'img', 'css-libs', 'scripts_main', 'scripts_libs', 'fonts', 'svgo', 'css-main']);
+gulp.task('watch', ['browser-sync', 'nunjucks-render', 'sass', 'img', 'css-libs', 'scripts_main', 'scripts_libs', 'fonts', 'svgo', 'css-main'], function() {
+
+    gulp.watch([dirStyles_src + '/**/*.{sass,scss}'], ['sass']);
+    gulp.watch([dirImg_src + "/**/*"], ['img']);
+    gulp.watch([dirScripts_src + '/**/*.js'], ['scripts_main']).on("change", browserSync.stream);
+    gulp.watch([dirFonts_src], ['fonts']).on("change", browserSync.reload);
+    gulp.watch([dirSvg_src + '/**/*.svg'], ['svgo']).on("change", browserSync.reload);
+    gulp.watch([dirHtml_src + "/**/*.html"], ['nunjucks-render']).on("change", browserSync.reload);
+});
 
 gulp.task('default', ['watch']);
 

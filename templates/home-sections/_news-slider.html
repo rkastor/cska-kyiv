@@ -1,4 +1,4 @@
-<div class="news-slider">
+<section class="news-slider">
 
 
     <div class="container">
@@ -7,12 +7,13 @@
         <div class="news-slider__preview swiper-container news-list">
 
             <div class="swiper-wrapper">
+            
                 {% for i in range(0, 4) -%}
                 <div class="swiper-slide">
                     <div class="card">
                         <div class="card__info">
                             <div class="card__category">
-                                News
+                                News {{i + 1}} 
                             </div>
 
                             <span class="card__title">Футбольний клуб «ЦСКА-Київ»</span>
@@ -42,12 +43,13 @@
                     <div class="card">
                         <a class="card__info" href="#">
                             <div class="card__category">
-                                News
+                                News {{i + 1}} 
                             </div>
 
                             <span class="card__title">Футбольний клуб «ЦСКА-Київ»</span>
                             <p class="card__date">1.09.2019</p>
                         </a>
+                        <div class="status-bar"></div>
                     </div>
                 </div>
                 {%- endfor %}
@@ -56,4 +58,4 @@
     </div>
 
 
-</div>
+</section>

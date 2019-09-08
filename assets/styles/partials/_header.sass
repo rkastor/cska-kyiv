@@ -7,6 +7,18 @@
     top: 0
     z-index: $z-header
     text-transform: uppercase
+    transition: padding .2s, background-color .4s
+
+    &.sticky
+        padding-top: 0px
+        background-color: transparent
+
+        .header__info
+            margin-top: -80px
+            opacity: 0
+            visibility: hidden
+        .header__logo
+            transform: scale(.75) translateY(-15%)
 
     .container-fluid
         display: flex
@@ -27,6 +39,7 @@
     &__logo
         flex: 0 auto
         padding: 0 40px
+        transition: transform .2s
         +min-md
             .site-name
                 display: none
@@ -40,6 +53,8 @@
         align-items: center
         justify-content: space-between
         flex-direction: row
+
+        transition: margin .2s, opacity .2s
 
     &__nav
         +min-md
