@@ -13,7 +13,7 @@
         loopFillGroupWithBlank: true,
         slidesPerView: 1,
         autoplay: {
-            delay: 2000
+            delay: 4000
         },
         observer: true,
         // effect: 'fade'
